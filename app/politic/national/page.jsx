@@ -24,7 +24,7 @@ const National = async () => {
     <>
     <div>National</div>
     {
-      data.map((a, i) => (
+      data?.map((a, i) => (
         <div key={i}>{a.title}</div>
         ))}
     </>

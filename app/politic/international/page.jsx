@@ -23,7 +23,7 @@ const International = async () => {
     <>
     <div>International</div>
     {
-      data.map((a, i) => (
+      data?.map((a, i) => (
         <div key={i}>{a.tit}</div>
         ))}
         </>

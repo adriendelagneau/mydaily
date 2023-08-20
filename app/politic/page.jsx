@@ -30,7 +30,7 @@ const Politic = async () => {
       <Link href={'/politic/national'}>national</Link>
 
       {
-      data.map((a, i) => (
+      data?.map((a, i) => (
         <div key={i}>{a.title}</div>
         ))}
       
