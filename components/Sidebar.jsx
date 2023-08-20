@@ -27,13 +27,13 @@ const Sidebar = () => {
     setCurrentCategory(null);
   };
 
-  if (categoryError) return "An error has occurred.";
-  if (categoryIsLoading) return "Loading...";
+  if (categoryError || subcategoryError) return "An error has occurred.";
+  if (categoryIsLoading || subcategoryIsLoading) return "Loading...";
 
   return (
     <>
       {/* Overlay to capture clicks and close the sidebar */}
-      <div className={`w-full h-[calc(100vh-65px)] opacity-30 fixed top-[65px] left-500 ${isOpen ? 'z-20 bg-gray-900' : '-z-10'}`} onClick={closeMenu}></div>
+      <div className={`w-full h-[calc(100vh-65px)] opacity-30 fixed top-[65px] left-700 ${isOpen ? 'z-20 bg-gray-900' : '-z-10'}`} onClick={closeMenu}></div>
       {/* Sidebar container */}
       <div className={`w-[220px] h-[calc(100vh-65px)] z-30 bg-white fixed top-[65px] transition-all duration-300 ease-in-out border-r ${isOpen ? 'left-0' : '-left-[250px]'}`}>
         <div className='w-full mt-8 mb-5 text-center'>
@@ -49,11 +49,14 @@ const Sidebar = () => {
                 className="relative flex items-center justify-between hover:bg-blue-100 hover:cursor-pointer"
                 onMouseEnter={() => handleMouseEnter(link._id)}
                 onMouseLeave={handleMouseLeave}
-                onClick={closeMenu}
+                onClick={() => {
+                  closeMenu()
+                  setCurrentCategory(null)
+                }}
               >
                 {/* Main category name */}
                 <div className='p-3 capitalize'>{link.name}</div>
-                {/* Show the '>' icon if the category has subcategories */}
+                {/* Show the '>' svg, if the category has subcategories */}
                 {subcategoryData?.some(subcategory => subcategory.category._id === link._id) && (
                   <span className="text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -76,7 +79,10 @@ const Sidebar = () => {
                         <li key={subIndex} className="flex bg-white">
                           <Link
                             href={subcategory.url}
-                            onClick={closeMenu}
+                            onClick={() => {
+                              closeMenu()
+                              setCurrentCategory(null)
+                            }}
                             className="w-full px-4 py-2 hover:bg-blue-100 hover:cursor-pointer"
                           >
                             {subcategory.name}
