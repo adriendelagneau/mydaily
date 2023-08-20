@@ -6,7 +6,7 @@ export const GET = async (request) => {
 
     try {
         await connect()
-        const subcategories = await Subcategory.find()
+        const subcategories = await Subcategory.find().populate('category')
 
         return new NextResponse(JSON.stringify(subcategories), { status: 200})
     } catch(err) {
