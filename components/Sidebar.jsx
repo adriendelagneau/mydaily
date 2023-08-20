@@ -3,6 +3,9 @@
 import React, { useContext, useState } from 'react'
 import { MenuContext } from '@/context/MenuContext';
 import Link from 'next/link';
+import useSWR from 'swr'
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const navLinks = [
   {
@@ -68,6 +71,13 @@ const navLinks = [
 
 const Sidebar = () => {
 
+  //const { data } = useSWR('/api/articles', fetcher)
+  const { data, error, isLoading } = useSWR(
+    "/api/category",
+    fetcher
+  );
+  console.log(data)
+
   const { isOpen, closeMenu } = useContext(MenuContext)
 
   // State to keep track of the currently hovered category
@@ -82,6 +92,9 @@ const Sidebar = () => {
   const handleMouseLeave = () => {
     setCurrentCategory(null);
   };
+
+  if (error) return "An error has occurred.";
+  if (isLoading) return "Loading...";
 
   return (
     <>

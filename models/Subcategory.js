@@ -12,6 +12,10 @@ const subcategorySchema = new Schema(
             ref: 'Category',
             required: true
         },
+        url: {
+            type: String,
+            required: true,
+        },
     },
     { timestamps: true }
 )

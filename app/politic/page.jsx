@@ -22,18 +22,13 @@ async function getData() {
 
 const Politic = async () => {
  const data = await getData();
-console.log(data)
+
   return (
     <>
-    <div>cat page</div>
-      <Link href={'/politic/international'}>international</Link>
-      <Link href={'/politic/national'}>national</Link>
-
       {
       data.map((a, i) => (
         <div key={i}>{a.title}</div>
         ))}
-      
     </>
   )
 }
