@@ -22,7 +22,7 @@ async function getData() {
 
 const Politic = async () => {
  const data = await getData();
-
+console.log(data)
   return (
     <>
     <div>cat page</div>
@@ -30,7 +30,7 @@ const Politic = async () => {
       <Link href={'/politic/national'}>national</Link>
 
       {
-      data?.map((a, i) => (
+      data.map((a, i) => (
         <div key={i}>{a.title}</div>
         ))}
       

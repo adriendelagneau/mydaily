@@ -15,11 +15,11 @@ class APIfeatures {
         }
         
         if (this.queryString.category) {   
-            this.articles = this.articles.filter(article => article.category == this.queryString.category) 
+            this.articles = this.articles.filter(article => article.category.name == this.queryString.category) 
         }
 
         if (this.queryString.subcategory) {   
-            this.articles = this.articles.filter(article => article.subcategory == this.queryString.subcategory) 
+            this.articles = this.articles.filter(article => article.subcategory.name == this.queryString.subcategory) 
         }
 
         return this;
@@ -39,7 +39,7 @@ class APIfeatures {
 
 export const GET = async(request) => {
     await connect()
-    const articles = await Article.find(); // Create the initial Mongoose query
+    const articles = await Article.find().populate(["author", "category", "subcategory"])
 
     const { searchParams } = new URL(request.url);
     const queryString = {};
