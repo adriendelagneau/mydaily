@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
   const pathname = usePathname();
 
   const category  = pathname.split("/")[1];
-  
+
 
   
   const { data: subcategoryData, error: subcategoryError, isLoading: subcategoryIsLoading } = useSWR("/api/subcategory", fetcher);
@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
   return (
     <div className='pt-[140px] max-w-7xl  mx-auto text-center '>
       <h1 className='text-5xl text-center'>
-        <Link href={"/politic"}>Politics</Link>
+        <Link href={"/politic"}>Economics</Link>
       </h1>
           <ul className='flex justify-center gap-6 mt-8 text-lg'>
               
