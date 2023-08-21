@@ -2,42 +2,20 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
-import NavbarCategory from '../components/NavbarCategory'
-import NavbarTitle from '../components/NavbarTitle'
+import NavbarCategory from './NavbarCategory'
+import NavbarTitle from './NavbarTitle'
 import { useSession } from "next-auth/react";
 import { MenuContext } from '@/context/MenuContext';
 import SignoutButton from './SignoutButton';
 
 import { usePathname } from 'next/navigation';
 
-const Navbar = () => {
-  const [showTitle, setShowTitle] = useState(false);
+const Navbar2 = () => {
+  const [showTitle, setShowTitle] = useState(true);
   //const session = useSession();
   const { toggle, closeMenu } = useContext(MenuContext)
 
-  const pathname = usePathname();
-  console.log(pathname)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-
-      if (scrollY > 100) {
-        setShowTitle(true);
-      } else {
-        setShowTitle(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
  
-
   return (
     <>
       <nav className=" fixed top-0 left-0 z-50 bg-white  w-full h-[65px] flex items-center px-3 py-2  border-b border-gray-200 text-sm font-semibold tracking-wider">
@@ -77,4 +55,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar2
