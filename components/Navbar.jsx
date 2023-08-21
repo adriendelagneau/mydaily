@@ -15,8 +15,7 @@ const Navbar = () => {
   //const session = useSession();
   const { toggle, closeMenu } = useContext(MenuContext)
 
-  const pathname = usePathname();
-  console.log(pathname)
+
 
   useEffect(() => {
     const handleScroll = () => {

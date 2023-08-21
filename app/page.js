@@ -97,9 +97,9 @@ export default async function Home() {
   return (
     <main className="min-h-[200vh] max-w-7xl mt-24 mx-auto flex flex-col justify-center px-5">
       
-      <div className='w-full text-center'>
+      <div className='w-full my-10 text-center'>
            <h1 className='text-5xl font-semibold font-title'>La Voie De L&rsquo;Info</h1>
-          <p className="text-xs font-normal">Votre fenêtre sur l&rsquo;actualité</p>
+          <p className="font-normal ">Votre fenêtre sur l&rsquo;actualité</p>
       </div>
       
       <div className='relative flex w-full h-auto p-5'>
