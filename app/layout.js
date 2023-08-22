@@ -5,8 +5,6 @@ import Sidebar from '../components/Sidebar'
 import AuthProvider from '@/components/provider/AuthProvider'
 import LayoutProvider from '@/components/provider/LayoutProvider'
 import localFont from "next/font/local"
-import Loading from '@/components/Loading'
-import { Suspense } from 'react'
 
 
 const limeLight = Limelight({ subsets: ['latin'], weight: '400', variable: '--font-limeLight' })
@@ -30,7 +28,7 @@ export default function RootLayout({ children }) {
           <MenuProvider>
             <Sidebar />
             <LayoutProvider>
-            <Suspense fallback={<Loading />}>{children}</Suspense>
+            {children}
             </LayoutProvider>
           </MenuProvider>
         </AuthProvider>
