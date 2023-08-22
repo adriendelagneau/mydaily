@@ -108,7 +108,7 @@ const Register = () => {
         <div className="relative mt-6">
           <input
             type={isPasswordVisible ? 'text' : 'password'}
-            className="relative z-10 w-full p-2 bg-transparent border-2 rounded-lg outline-none peer focus:border-blue-900 placeholder:text-transparent"
+            className="relative z-10 w-full p-2 pr-8 bg-transparent border-2 rounded-lg outline-none peer focus:border-blue-900 placeholder:text-transparent"
             id="password"
             placeholder="password"
             name="password"

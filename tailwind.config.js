@@ -7,9 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['var(--font-crimson)'],
-        title: ['var(--font-limelight)']
+      fontFamily: {     
+        limeLight: ['var(--font-limeLight)'],
+        libreBaskerville: ['var(--font-libreBaskerville)'],
+        myFont: ['var(--font-myFont)']
      }
     },
   },

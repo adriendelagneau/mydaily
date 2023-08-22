@@ -1,12 +1,17 @@
 import { MenuProvider } from '../context/MenuContext'
 import './globals.css'
-import { Inter, Roboto, Berkshire_Swash, Crimson_Text } from 'next/font/google'
+import { Libre_Baskerville, Limelight } from 'next/font/google'
 import Sidebar from '../components/Sidebar'
 import AuthProvider from '@/components/provider/AuthProvider'
 import LayoutProvider from '@/components/provider/LayoutProvider'
+import localFont from "next/font/local"
+import Loading from '@/components/Loading'
+import { Suspense } from 'react'
 
-const crimsonText = Crimson_Text({ subsets: ['latin'], weight: '400', variable: '--font-crimson' })
-const berkshireSwash = Berkshire_Swash({ subsets: ['latin'], weight: '400', variable: '--font-BerkshireSwash' })
+
+const limeLight = Limelight({ subsets: ['latin'], weight: '400', variable: '--font-limeLight' })
+const LibreBaskerville = Libre_Baskerville ({ subsets: ['latin'], weight: '400', variable: '--font-libreBaskerville' })
+const myFont = localFont({src: "../public/CloisterBlack.ttf",  variable: '--font-myFont'})
 
 export const metadata = {
   title: 'La Voie de l info',
@@ -19,13 +24,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   
   return (
-    <html lang="en" className={`${crimsonText.variable} ${berkshireSwash.variable} `}>
+    <html lang="en" className={`${myFont.variable} ${limeLight.variable} ${LibreBaskerville.variable}`}>
       <body >
         <AuthProvider>
           <MenuProvider>
             <Sidebar />
             <LayoutProvider>
-            {children}
+            <Suspense fallback={<Loading />}>{children}</Suspense>
             </LayoutProvider>
           </MenuProvider>
         </AuthProvider>
