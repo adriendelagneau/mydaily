@@ -13,7 +13,7 @@ import Navbar2 from '../Navbar2';
          <>
              {pathname === "/" ? <Navbar /> : <Navbar2 />}
              {children}
-             {pathname === "/login" || "/register" && <Footer/>}
+             {!(pathname === "/register" || pathname === "/login") && <Footer/>}
          </>
      )
  };
