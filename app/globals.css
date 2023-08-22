@@ -246,7 +246,7 @@ margin-right: 20px;
   margin: 6px;
   background-color: #a01729;
   animation: load 1s ease-in-out infinite;
-  -webkit-animation:;
+  -webkit-animation: load 1s ease-in-out infinite;
 }
 
 .circle:nth-child(2){

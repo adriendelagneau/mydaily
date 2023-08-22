@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
   if (subcategoryIsLoading) return "Loading...";
 
   return (
-    <div className='pt-[140px] max-w-7xl  mx-auto text-center '>
+    <div className='pt-[140px] max-w-7xl  mx-auto text-center  min-h-[270px]'>
       <h1 className='text-5xl text-center'>
         <Link href={`/${category}`}>{category}</Link>
       </h1>
