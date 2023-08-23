@@ -1,3 +1,4 @@
+import CategoryLayout from '@/components/CategoryLayout';
 import Link from 'next/link';
 import React from 'react'
 
@@ -25,6 +26,7 @@ const Sport = async () => {
 
   return (
     <>
+     
       {
       data.map((a, i) => (
         <div key={i}>{a.title}</div>
