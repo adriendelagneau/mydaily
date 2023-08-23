@@ -39,7 +39,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className=" fixed top-0 left-0 z-50 bg-white  w-full h-[65px] flex items-center px-3 py-2  border-b border-gray-200 text-sm font-semibold tracking-wider">
+      <nav className=" fixed top-0 left-0 z-50 bg-white  w-full h-[65px] flex items-center px-3 py-2  border-b border-gray-200 text-sm font-medium tracking-wider">
 
         <div className="flex w-auto">
           <div className='p-2 rounded-full hover:bg-gray-100'>

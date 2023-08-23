@@ -36,4 +36,24 @@
   
 </div>
 </div>
- </>
+</>
+ 
+
+const categoryData = [
+  {
+    name: "politic",
+    subcategory: ["national", "international"]
+  },
+  {
+    name: "economic",
+    subcategory: ["national", "international"]
+  },
+  {
+    name: "culture",
+    subcategory: ["videogame", "music", "series"]
+  },
+  {
+    name: "sport",
+    subcategory: ["football", "basketball", "tennis", "combat", "rugby"]
+  },
+]
