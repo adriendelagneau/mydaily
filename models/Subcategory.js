@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Category from "./Category";
 
 const { Schema } = mongoose;
 const subcategorySchema = new Schema(
@@ -9,7 +10,7 @@ const subcategorySchema = new Schema(
         },
         category: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Category',
+            ref: Category,
             required: true
         },
         url: {
