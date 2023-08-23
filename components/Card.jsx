@@ -7,19 +7,19 @@ const Card = ({article}) => {
     <>
     <div className='lg:w-full lg:max-w-full max-w-[400px] mx-auto  min-h-[350px] flex flex-col lg:flex-row gap-3'>
         <div className='flex-1 h-full '>
-          <Link href={'/'}>
+          <Link href={`${process.env.NEXTAUTH_URL}${article.url}/${article._id}`}>
             
           <div className='mb-10 text-4xl font-semibold hover:text-blue-950'>{ article.title}</div>
           </Link>
           <div className='mb-5 line-clamp-5'>{article.content }</div>
-          <div className='text-gray-800'>{article.author}</div>
+          <div className='text-gray-800'>Author: {article.author.name}</div>
           
       </div>
       
       <div className='flex-1 h-full'>
           <div className=''>
             <Link href={"/"}>
-          <Image src={article.url} alt={article.title} width={480} height={350}  className='h-auto'/>
+          <Image src={article.img} alt={article.title} width={480} height={350}  className='h-auto'/>
             </Link>
         <div className='mt-3 text-sm text-gray-800 '>Lorem ipsum dolor  elit. Dolor dolore quam quia?</div>
         </div>

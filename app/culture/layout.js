@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-         <CategoryLayout category={"culture"} subcategory={ ["video game", "music", "series"]} />
+         <CategoryLayout category={"culture"} subcategory={ ["videogame", "music", "series"]} />
         {children}
     </>
     

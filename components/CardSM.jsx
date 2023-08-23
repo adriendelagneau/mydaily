@@ -11,7 +11,7 @@ const CardSM = ({article}) => {
           <div className='w-full text-sm font-light line-clamp-3'>{article.content}</div>
            
          
-          <div className='mt-3 text-xs text-gray-800'>{article.author}</div>
+          <div className='mt-3 text-xs text-gray-800'>{article.author.name}</div>
     </div>
       </Link>
   )

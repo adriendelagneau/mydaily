@@ -11,6 +11,10 @@ const articleSchema = new Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: Category,
@@ -34,6 +38,10 @@ const articleSchema = new Schema(
       type: String,
       required: true,
     },
+    url: {
+      type: String,
+      required: true,
+    }
   
   },
   { timestamps: true }
