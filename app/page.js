@@ -30,7 +30,7 @@ export default async function Home() {
       
       <div className='relative flex w-full h-auto p-5'>
         <div className='flex-grow  max-w-[973px] mx-auto '>
-          {data.slice(0,3).map((a, i) => (
+          {data.slice(0,4).map((a, i) => (
           <Card key={i} article={a}/>
         ))}
           

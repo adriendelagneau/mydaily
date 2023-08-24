@@ -3,16 +3,13 @@
 import React, { useContext, useState } from 'react';
 import { MenuContext } from '@/context/MenuContext';
 import Link from 'next/link';
-import useSWR from 'swr';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import { categoryData } from '@/constants';
+
 
 const Sidebar = () => {
   const { isOpen, closeMenu } = useContext(MenuContext);
 
-  // Fetch category and subcategory data using SWR
-  const { data: categoryData, error: categoryError, isLoading: categoryIsLoading } = useSWR("/api/category", fetcher);
-  const { data: subcategoryData, error: subcategoryError, isLoading: subcategoryIsLoading } = useSWR("/api/subcategory", fetcher);
 
   // State to keep track of the currently hovered category
   const [currentCategory, setCurrentCategory] = useState(null);
@@ -27,8 +24,7 @@ const Sidebar = () => {
     setCurrentCategory(null);
   };
 
-  if (categoryError || subcategoryError) return "An error has occurred.";
-  if (categoryIsLoading || subcategoryIsLoading) return "Loading...";
+
 
   return (
     <>
@@ -47,7 +43,7 @@ const Sidebar = () => {
               <Link
                 href={link.url}
                 className="relative flex items-center justify-between hover:bg-blue-100 hover:cursor-pointer"
-                onMouseEnter={() => handleMouseEnter(link._id)}
+                onMouseEnter={() => handleMouseEnter(link.id)}
                 onMouseLeave={handleMouseLeave}
                 onClick={() => {
                   closeMenu()
@@ -57,24 +53,18 @@ const Sidebar = () => {
                 {/* Main category name */}
                 <div className='p-3 capitalize'>{link.name}</div>
                 {/* Show the '>' svg, if the category has subcategories */}
-                {subcategoryData?.some(subcategory => subcategory.category._id === link._id) && (
-                  <span className="text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                )}
+
               </Link>
 
               {/* Show subcategory list if the category is currently hovered */}
-              {currentCategory === link._id && (
+              {currentCategory === link.id && (
                 <div className='absolute right-0 top-[50%] transform translate-x-[100%] translate-y-[-50%] flex flex-col capitalize'
-                  onMouseEnter={() => handleMouseEnter(link._id)}
+                  onMouseEnter={() => handleMouseEnter(link.id)}
                   onMouseLeave={handleMouseLeave}
                 >
                   <ul className='pl-4 bg-white custom-clip-path min-w-[130px]'>
-                    {subcategoryData
-                      ?.filter(subcategory => subcategory.category._id === link._id)
+                    {link.subcategory
+
                       .map((subcategory, subIndex) => (
                         <li key={subIndex} className="flex bg-white">
                           <Link
