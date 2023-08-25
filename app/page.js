@@ -1,8 +1,11 @@
+
+
 import Card from '@/components/Card';
 import CardSM from '@/components/CardSM';
-import Slider from '@/components/Slider';
+
 import Slider2 from '@/components/Slider2';
 import Slider3 from '@/components/Slider3';
+
 
 
 async function getData() {
@@ -65,8 +68,8 @@ export default async function Home() {
           
         </div>
       </div>
-  
-      
+
+     <Slider3 />
     </main>
   )
 }

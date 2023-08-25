@@ -1,135 +1,152 @@
-<ul className='w-full h-full py-3'>
-{categoryData?.map((category) => (
-  <li key={category.id} className="relative">
-    <Link
-      href={category.url}
-      className="relative flex items-center justify-between hover:bg-blue-100 hover:cursor-pointer"
-      onMouseEnter={() => handleMouseEnter(category.id)}
-      onMouseLeave={handleMouseLeave}
-      onClick={() => {
-        closeMenu();
-        setCurrentCategory(null);
-      }}
-    >
-      <div className='p-3 capitalize'>{category.name}</div>
-      {category.subcategory.length > 0 && (
-        <span className="text-gray-500">
-          {/* Your SVG code */}
-        </span>
-      )}
-    </Link>
+import React, { useState, useRef, useEffect } from 'react';
+import GSAP from 'gsap';
+import { Power2 } from 'gsap';
+import { Draggable } from 'gsap/Draggable';
+import Link from 'next/link';
 
-    {currentCategory === category.id && (
-      <div className='absolute right-0 top-[50%] transform translate-x-[100%] translate-y-[-50%] flex flex-col capitalize'>
-        <ul className='pl-4 bg-white custom-clip-path min-w-[130px]'>
-          {category.subcategory.map((subcategory, subIndex) => (
-            <li key={subIndex} className="flex bg-white">
-              <Link
-                href={subcategory.url}
-                onClick={() => {
-                  closeMenu();
-                  setCurrentCategory(null);
-                }}
-                className="w-full px-4 py-2 hover:bg-blue-100 hover:cursor-pointer"
-              >
-                {subcategory.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
-  </li>
-))}
-</ul>
+const items = [{
+  id: 0,
+  url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 1,
+  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 2,
+  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 3,
+  url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 4,
+  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 5,
+  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 6,
+  url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 7,
+  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 8,
+  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 9,
+  url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 10,
+  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},
+{
+  id: 11,
+  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  title: "Cooked dish on gray bowl",
+  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
+},];
 
+GSAP.registerPlugin(Draggable);
 
+const Slider3 = () => {
+  const sliderContainerRef = useRef(null);
+  const sliderRef = useRef(null);
+  const slideRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
+  const goToPreviousSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide === 0 ? items.length - 1 : prevSlide - 1));
+  };
 
+  const goToNextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide === items.length - 1 ? 0 : prevSlide + 1));
+  };
 
+  useEffect(() => {
+    const slider = sliderRef.current;
+    const slide = slideRef.current;
 
+    const totalItems = items.length;
+    const slideWidth = slide.offsetWidth + parseInt(getComputedStyle(slide).marginRight, 10) * 2;
+    const visibleSlides = 4;
+    const sliderWidth = slideWidth * totalItems / visibleSlides;
+    //slider.style.width = `${sliderWidth}px`;
 
+    // Set up Draggable for the slider
+    Draggable.create(slider, {
+      type: 'x', // Only allow horizontal dragging
+      edgeResistance: 0.5, // Add a resistance at the edges
+      onDrag: function () {
+        if (this.x > 0) {
+          this.x = 0; // Prevent dragging more than 0
+          GSAP.to(slider, { x: 0, ease: Power2.easeInOut, duration:0.5 });
+        }
+        else if (this.x < (-slider.offsetWidth + sliderContainerRef.current.offsetWidth - 40)) {
+          this.x = (-slider.offsetWidth + sliderContainerRef.current.offsetWidth - 40); // Prevent dragging more than 0
+          GSAP.to(slider, { x: -slider.offsetWidth + sliderContainerRef.current.offsetWidth - 40, ease: Power2.easeInOut, duration:0.5 });
+        }
+      },
+    });
 
+    GSAP.to(slider, { x: 0 });
+  }, []);
 
-
-
-
-
-
-
-
-
-
-
-
-
-return (
-  <>
-    {/* Overlay to capture clicks and close the sidebar */}
-    <div className={`w-full h-[calc(100vh-65px)] opacity-30 fixed top-[65px] left-500 text-lg font-medium capitalize ${isOpen ? 'z-20 bg-gray-900' : '-z-10'}`} onClick={closeMenu}></div>
-    {/* Sidebar container */}
-    <div className={`w-[220px] h-[calc(100vh-65px)] z-30 bg-white fixed top-[65px] transition-all duration-300 ease-in-out border-r ${isOpen ? 'left-0' : '-left-[250px]'}`}>
-      <div className='w-full mt-8 mb-5 text-center'>
-        <Link href="/subscribe" className="p-2 text-white bg-blue-600 rounded-full hover:bg-blue-500" onClick={closeMenu}>Subscribe</Link>
-      </div>
-      {/* Navigation list */}
-      <ul className='w-full h-full py-3'>
-        {categoryData?.map((link, i) => (
-          <li key={i} className="relative">
-            {/* Main category link */}
-            <Link
-              href={link.url}
-              className="relative flex items-center justify-between hover:bg-blue-100 hover:cursor-pointer"
-              onMouseEnter={() => handleMouseEnter(link._id)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => {
-                closeMenu()
-                setCurrentCategory(null)
-              }}
-            >
-              {/* Main category name */}
-              <div className='p-3 capitalize'>{link.name}</div>
-              {/* Show the '>' svg, if the category has subcategories */}
-              {subcategoryData?.some(subcategory => subcategory.category._id === link._id) && (
-                <span className="text-gray-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
-              )}
-            </Link>
-
-            {/* Show subcategory list if the category is currently hovered */}
-            {currentCategory === link._id && (
-              <div className='absolute right-0 top-[50%] transform translate-x-[100%] translate-y-[-50%] flex flex-col capitalize'
-                onMouseEnter={() => handleMouseEnter(link._id)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <ul className='pl-4 bg-white custom-clip-path min-w-[130px]'>
-                  {subcategoryData
-                    ?.filter(subcategory => subcategory.category._id === link._id)
-                    .map((subcategory, subIndex) => (
-                      <li key={subIndex} className="flex bg-white">
-                        <Link
-                          href={subcategory.url}
-                          onClick={() => {
-                            closeMenu()
-                            setCurrentCategory(null)
-                          }}
-                          className="w-full px-4 py-2 hover:bg-blue-100 hover:cursor-pointer"
-                        >
-                          {subcategory.name}
-                        </Link>
-                      </li>
-                    ))
-                  }
-                </ul>
+  return (
+    <div className="slider-container w-[800px] xl:w-[1250px] mt-[100px] mx-auto" ref={sliderContainerRef}>
+      <div className="slider" ref={sliderRef}>
+        {items.map((item, index) => (
+          <div
+            className={`rounded-full slide ${index === currentSlide ? 'active' : ''}`}
+            key={index}
+            ref={slideRef}
+          >
+            <div className="card-item">
+              <img src={item.url} alt="" />
+              <div className="card-info">
+                <Link href={"/"} className="card-title">{item.title}</Link>
+                <p className="text-lg card-description">{item.content}</p>
               </div>
-            )}
-          </li>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
+      <div className='absolute left-0 z-40 flex bottom-8'>
+        <button onClick={goToPreviousSlide}>Previous</button>
+        <button onClick={goToNextSlide}>Next</button>
+      </div>
     </div>
-  </>
-);
-}
+  );
+};
+
+export default Slider3;

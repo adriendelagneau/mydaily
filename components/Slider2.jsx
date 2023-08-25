@@ -80,69 +80,19 @@ const items = [{
 
 GSAP.registerPlugin(Draggable); // Register the Draggable plugin
 const Slider2 = () => {
-  
+
   const sliderContainerRef = useRef(null);
   const sliderRef = useRef(null);
   const slideRef = useRef(null);
-  
-
-
-  const handleNextSlide = () => {
- 
-    const slideWidth = slideRef.current.offsetWidth + parseInt(getComputedStyle(slideRef.current).marginRight, 10) * 2;
-
-      const computedStyles = getComputedStyle(sliderRef.current);
-      const transformMatrix = new WebKitCSSMatrix(computedStyles.transform);
-      const currentX = transformMatrix.m41;
-
-      const maxX = -sliderRef.current.offsetWidth + sliderContainerRef.current.offsetWidth - 40// Maximum translation value to fully show the last slide
-      const newX = Math.max(maxX, currentX - slideWidth * 2); // Limit the translation to not exceed the maximum
-
-      const translateDiff = Math.min(newX - currentX, slideWidth); // Adjust translateDiff to stop when last slide is fully in view
-
-      GSAP.to(sliderRef.current,  {
-        x: `+=${translateDiff}`,
-        duration:0.5,
-        ease: Power2.easeInOut,
-
-      })  
-};
-
-  const handlePrevSlide = () => {
-
-    const slideWidth = slideRef.current.offsetWidth + parseInt(getComputedStyle(slideRef.current).marginRight, 10) * 2;
-
-    const computedStyles = getComputedStyle(sliderRef.current);
-    const transformMatrix = new WebKitCSSMatrix(computedStyles.transform); // Parse the transform matrix
-    const currentX = transformMatrix.m41; // Get the X translation value
-
-    // Log the current translation value
-    console.log('Current Translation X:', currentX);
-
-    // Calculate the new translation value, considering the limits
-    const newX = Math.min(0, currentX + slideWidth * 2);
-
-    // Calculate the difference to translate by
-    const translateDiff = newX - currentX;
-
-    GSAP.to(sliderRef.current, {
-      x: `+=${translateDiff}`,
-      duration: 0.5,
-      ease: Power2.easeInOut,
-    });
-  };
-
-
-  
 
   useEffect(() => {
     const slider = sliderRef.current;
     const slide = slideRef.current;
 
-    const totalItems = items.length;
-    const slideWidth = slide.offsetWidth + parseInt(getComputedStyle(slide).marginRight, 10) * 2;
-    const visibleSlides = 4;
-    const sliderWidth = slideWidth * totalItems / visibleSlides;
+    //const totalItems = items.length;
+    //const slideWidth = slide.offsetWidth + parseInt(getComputedStyle(slide).marginRight, 10) * 2;
+    //const visibleSlides = 4;
+    //const sliderWidth = slideWidth * totalItems / visibleSlides;
     //slider.style.width = `${sliderWidth}px`;
 
     // Set up Draggable for the slider
@@ -152,11 +102,11 @@ const Slider2 = () => {
       onDrag: function () {
         if (this.x > 0) {
           this.x = 0; // Prevent dragging more than 0
-          GSAP.to(slider, { x: 0, ease: Power2.easeInOut, duration:0.5 });
+          GSAP.to(slider, { x: 0, ease: Power2.easeInOut, duration: 0.5 });
         }
         else if (this.x < (-slider.offsetWidth + sliderContainerRef.current.offsetWidth - 40)) {
           this.x = (-slider.offsetWidth + sliderContainerRef.current.offsetWidth - 40); // Prevent dragging more than 0
-          GSAP.to(slider, { x: -slider.offsetWidth + sliderContainerRef.current.offsetWidth - 40, ease: Power2.easeInOut, duration:0.5 });
+          GSAP.to(slider, { x: -slider.offsetWidth + sliderContainerRef.current.offsetWidth - 40, ease: Power2.easeInOut, duration: 0.5 });
         }
       },
     });
@@ -164,24 +114,37 @@ const Slider2 = () => {
     GSAP.to(slider, { x: 0 });
 
 
-  
-
-    // Attach event listeners for next and previous buttons
-    // You can use your own UI for these buttons
-    const nextButton = document.getElementById('nextButton');
-    const prevButton = document.getElementById('prevButton');
-    nextButton.addEventListener('click', handleNextSlide);
-    prevButton.addEventListener('click', handlePrevSlide);
-
-    // Clean up event listeners on unmount
-    return () => {
-      nextButton.removeEventListener('click', handleNextSlide);
-      prevButton.removeEventListener('click', handlePrevSlide);
-    };
   }, []);
 
+
+  const slideLeft = () => {
+    const currentPosition = parseFloat(getComputedStyle(sliderRef.current).transform.split(',')[4]);
+    const newPosition = currentPosition + 320;
+
+    if (newPosition <= 0) {
+      GSAP.to(sliderRef.current, { x: newPosition, ease: Power2.easeInOut, duration: 0.5 });
+    } else {
+      GSAP.to(sliderRef.current, { x: 0, ease: Power2.easeInOut, duration: 0.5 });
+    }
+  };
+
+  const slideRight = () => {
+    const currentPosition = parseFloat(getComputedStyle(sliderRef.current).transform.split(',')[4]);
+    const newPosition = currentPosition - 320;
+    const sliderContainerWidth = sliderContainerRef.current.offsetWidth;
+    const sliderWidth = sliderRef.current.offsetWidth;
+
+    if (sliderWidth + newPosition >= sliderContainerWidth) {
+      GSAP.to(sliderRef.current, { x: newPosition, ease: Power2.easeInOut, duration: 0.5 });
+    } else {
+      GSAP.to(sliderRef.current, { x: -(sliderWidth - sliderContainerWidth + 40), ease: Power2.easeInOut, duration: 0.5 });
+    }
+  };
+
+
+
   return (
-    <div className="slider-container w-[800px] xl:w-[1250px] mt-[100px] mx-auto" ref={sliderContainerRef}>
+    <div className="slider-container w-[840px] xl:w-[1275px] mt-[100px] mx-auto" ref={sliderContainerRef}>
       <div className="slider" ref={sliderRef}>
         {items.map((item, index) => (
 
@@ -197,17 +160,19 @@ const Slider2 = () => {
         ))}
       </div>
       <div className='absolute left-0 z-40 flex bottom-8'>
+        <div className="slider-controls">
+          <button onClick={slideLeft}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button onClick={slideRight} className="ml-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
 
-        <button id="prevButton">
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button id="nextButton">
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
       </div>
     </div>
   )
