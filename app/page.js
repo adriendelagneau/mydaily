@@ -2,9 +2,10 @@
 
 import Card from '@/components/Card';
 import CardSM from '@/components/CardSM';
+import CardSM2 from '@/components/CardSM2';
 
 import Slider2 from '@/components/Slider2';
-import Slider3 from '@/components/Slider3';
+
 
 
 
@@ -33,7 +34,7 @@ export default async function Home() {
       
       <div className='relative flex w-full h-auto p-5'>
         <div className='flex-grow  max-w-[973px] mx-auto '>
-          {data.slice(0,4).map((a, i) => (
+          {data.slice(0,3).map((a, i) => (
           <Card key={i} article={a}/>
         ))}
           
@@ -49,7 +50,7 @@ export default async function Home() {
         </div>
       </div>
       
-      <Slider2 />
+      <Slider2 articles={ data} />
       <div className='w-full h-[1px] bg-slate-300 my-4'></div>
       <div className='relative flex w-full h-auto p-5 '>
         <div className='flex-grow  max-w-[973px] mx-auto '>
@@ -59,9 +60,9 @@ export default async function Home() {
           
         </div>
         <div className='sticky top-20 w-[250px] h-[700px] ml-5 hidden xl:inline'>
-          {data.slice(0,5).map((a, i) => (
+          {data.slice(0,4).map((a, i) => (
             <>
-            <CardSM key={i} article={a} />
+            <CardSM2 key={i} article={a} />
             <div className='w-full h-[1px] bg-slate-300 my-4'></div>
             </>
          ))}
@@ -69,7 +70,6 @@ export default async function Home() {
         </div>
       </div>
 
-     <Slider3 />
     </main>
   )
 }

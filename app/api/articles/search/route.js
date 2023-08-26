@@ -19,7 +19,11 @@ class APIfeatures {
         }
 
         if (this.queryString.subcategory) {   
+            console.log("back in the game")
+        
+            console.log(this.queryString.subcategory)
             this.articles = this.articles.filter(article => article.subcategory.name == this.queryString.subcategory) 
+           // console.log(this.articles, "this")
         }
 
         return this;
@@ -51,6 +55,6 @@ export const GET = async(request) => {
     articleFilter.filtering().sorting(); // Apply the filtering and sorting
 
     const filteredArticles = articleFilter.articles; // Access the filtered and sorted articles
-
+console.log(filteredArticles)
     return NextResponse.json(filteredArticles);
 }

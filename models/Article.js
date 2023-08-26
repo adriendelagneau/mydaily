@@ -34,7 +34,15 @@ const articleSchema = new Schema(
       ref: Author,
       required: true,
     },
+    imgXS: {
+      type: String,
+      required: true,
+    },
     img: {
+      type: String,
+      required: true,
+    },
+    imgXL: {
       type: String,
       required: true,
     },

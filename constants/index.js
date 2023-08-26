@@ -41,4 +41,13 @@ export const categoryData = [
       { name: "rugby", url: "/sport/rugby" },
     ],
   },
+  {
+    id: 5,
+    name: "ecologie",
+    url: "/ecologie",
+    subcategory: [
+      { name: "national", url: "/ecologie/national" },
+      { name: "international", url: "/ecologie/international" },
+    ],
+  },
 ];

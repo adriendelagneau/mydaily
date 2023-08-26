@@ -9,16 +9,16 @@ const Card = ({ article }) => {
         
         <div className='flex-1 h-full '>
           <Link href={`${process.env.NEXTAUTH_URL}${article.url}/${article._id}`}>
-            <div className='mb-10 text-4xl font-semibold hover:text-blue-950'>{article.title}</div>
+            <div className='mb-10 text-4xl font-semibold hover:text-blue-950 capitalise'>{article.title}</div>
           </Link>
           <div className='mb-5 line-clamp-5'>{article.content}</div>
-          <div className='text-gray-800'>Author: {article.author.name}</div>
+          <div className='text-gray-800 capitalise'>Author: {article.author.name}</div>
         </div>
 
         <div className='flex-1 h-full'>
           <div className=''>
             <Link href={`${process.env.NEXTAUTH_URL}${article.url}/${article._id}`}>
-              <Image src={article.img} alt={article.title} width={480} height={350} className='h-auto' />
+              <Image src={article.img} alt={article.title} width={480} height={350} className='h-auto ' />
             </Link>
             <div className='mt-3 text-sm text-gray-800 '>Lorem ipsum dolor  elit. Dolor dolore quam quia?</div>
           </div>

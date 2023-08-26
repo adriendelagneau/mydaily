@@ -79,7 +79,7 @@ const items = [{
 },];
 
 GSAP.registerPlugin(Draggable); // Register the Draggable plugin
-const Slider2 = () => {
+const Slider2 = ({articles}) => {
 
   const sliderContainerRef = useRef(null);
   const sliderRef = useRef(null);
@@ -144,22 +144,22 @@ const Slider2 = () => {
 
 
   return (
-    <div className="slider-container w-[840px] xl:w-[1275px] mt-[100px] mx-auto" ref={sliderContainerRef}>
+    <div className="slider-container w-[90%] xl:w-[1275px] mt-[100px] mx-auto" ref={sliderContainerRef}>
       <div className="slider" ref={sliderRef}>
-        {items.map((item, index) => (
+        {articles.map((item, index) => (
 
           <div className="rounded-full slide" key={index} ref={slideRef}>
             <div className="card-item">
-              <img src={item.url} alt="" />
+              <img src={item.img} alt="" />
               <div className="card-info">
-                <Link href={"/"} className="card-title">{item.title}</Link>
-                <p className="text-lg card-description">{item.content}</p>
+                <Link href={"/"} className="card-title capitalise">{item.title}</Link>
+                <p className="text-lg card-description line-clamp-4">{item.content}</p>
               </div>
             </div>
           </div>
         ))}
       </div>
-      <div className='absolute left-0 z-40 flex bottom-8'>
+      <div className='absolute left-0 z-40 flex bottom-[10px]'>
         <div className="slider-controls">
           <button onClick={slideLeft}>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

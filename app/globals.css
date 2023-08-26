@@ -120,6 +120,7 @@ a:hover{
   font-size: 20px;
   text-decoration: none;
   color: #222;
+  text-transform: capitalize;
 }
 .card-title:hover {
   color: #006aff;

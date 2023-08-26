@@ -5,7 +5,7 @@ import { footerLinks } from "../constants";
 
 const Footer = () => (
 
-  <footer className="w-full pt-24 mx-auto max-w-7xl">
+  <footer className="w-full pt-24 mx-auto mt-14 max-w-7xl">
 
   <div
     className="py-16 mx-auto space-y-8 w-fullpx-4 sm:px-6 lg:space-y-16 lg:px-8"
