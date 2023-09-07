@@ -3,56 +3,42 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const router = useRouter();
-  const [error, setError] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  
   const onSubmit = async (data) => {
     const { name, email, password } = data;
-
+  
     try {
-      const resUserExists = await fetch("api/userExists", {
-        method: "POST",
+      // Perform server-side validation and handle errors
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ name, email, password }),
       });
-
-      const { user } = await resUserExists.json();
-
-      if (user) {
-        setError("User already exists.");
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.message); // Display an error toast
         return;
       }
-
-      const res = await fetch("api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      });
-
-      if (res.ok) {
- 
-        router.push("/");
-      } else if (res.status === 409) {
-        setError("User already exists.");
-      } else {
-        console.log("User registration failed.");
-      }
+  
+      // Registration was successful
+      toast.success('Email send to your address!'); // Display a success toast
+      router.push('/login');
     } catch (error) {
-      console.log("Error during registration: ", error);
+      toast.error('Error during registration'); // Display an error toast
+      console.error('Error during registration:', error);
     }
   };
+
 
   return (
     <div className="pt-[300px] w-[300px] min-h-screen flex flex-col items-center mx-auto">
@@ -144,7 +130,7 @@ const Register = () => {
         </div>
 
         <button className="w-full mt-10 text-xl rounded-md ">Register</button>
-        {error && <p className="text-red-800">{error}</p>}
+       
       </form>
 
       <Link href="/login" className="mt-9 hover:text-blue-900 text-md">Already an account? LOGIN.</Link>

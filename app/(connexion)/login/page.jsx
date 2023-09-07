@@ -1,39 +1,46 @@
 "use client";
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { signIn} from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify"; // Import react-toastify
 
 
 const Login = () => {
-  const [error, setError] = useState("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const {register,handleSubmit,formState: { errors }} = useForm();
-const router = useRouter()
-    
-  const submit = async (data) => {
-      const { email, password } = data;
-      
-      try {
-        const res = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        });
-  
-          if (res.error) {
-        console.log(res.error)
-        setError("Invalid Credentials");
-        return;
-        }
-  
-       router.push("/");
-      } catch (error) {
-        console.log(error);
-      }
-  }
 
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const router = useRouter()
+
+  const submit = async (data) => {
+    const { email, password } = data;
+
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (res.error) {
+        console.log(res.error);
+
+        // Display an error toast with the error message
+        toast.error(res.error); // Display an error toast with the error message
+        return;
+      }
+
+      // Login was successful
+      toast.success("Login successful!"); // Display a success toast
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+
+      // Display a generic error toast for unexpected errors
+      toast.error("An error occurred during login. Please try again later.");
+    }
+  };
 
   return (
     <div className="pt-[300px] w-[300px] min-h-screen flex flex-col items-center mx-auto">
@@ -102,7 +109,7 @@ const router = useRouter()
         </div>
 
         <button className="w-full mt-10 text-xl rounded-md">Login</button>
-        {error && <p className="text-red-800">{error}</p>}
+
       </form>
 
       <div className="my-6 text-center">- OR -</div>

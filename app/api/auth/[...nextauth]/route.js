@@ -5,33 +5,36 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google"
 
+connect();
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
       credentials: {},
-
       async authorize(credentials) {
         const { email, password } = credentials;
 
         try {
-          await connect();
           const user = await User.findOne({ email });
 
           if (!user) {
-            console.log("no user")
-            return null;
+            throw new Error("User not found"); // Provide a meaningful error message
+          }
+
+          if (!user.isVerified) {
+            throw new Error("Account not verified"); // Provide a meaningful error message
           }
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
           if (!passwordsMatch) {
-            return null;
+            throw new Error("Incorrect password"); // Provide a meaningful error message
           }
 
           return user;
         } catch (error) {
-          console.log("Error: ", error);
+          throw new Error(error.message); // Pass the error message to the front-end
         }
       },
     }),
@@ -40,7 +43,6 @@ export const authOptions = {
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
     }),
-
   ],
 
 
@@ -56,6 +58,7 @@ export const authOptions = {
           await User.create({
             email: profile.email,
             name: profile.name.replace(" ", "").toLowerCase(),
+            isVerified: true
             // You can add more properties here as needed
           });
         }
@@ -68,9 +71,7 @@ export const authOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/",
-  },
+
 };
 
 const handler = NextAuth(authOptions);

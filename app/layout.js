@@ -6,6 +6,10 @@ import AuthProvider from '@/components/provider/AuthProvider'
 import LayoutProvider from '@/components/provider/LayoutProvider'
 import localFont from "next/font/local"
 
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const limeLight = Limelight({ subsets: ['latin'], weight: '400', variable: '--font-limeLight' })
 const LibreBaskerville = Libre_Baskerville ({ subsets: ['latin'], weight: '400', variable: '--font-libreBaskerville' })
@@ -32,6 +36,18 @@ export default function RootLayout({ children }) {
             </LayoutProvider>
           </MenuProvider>
         </AuthProvider>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          />
       </body>
     </html>
   )

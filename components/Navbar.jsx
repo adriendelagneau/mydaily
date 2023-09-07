@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import NavbarCategory from '../components/NavbarCategory'
 import NavbarTitle from '../components/NavbarTitle'
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { MenuContext } from '@/context/MenuContext';
 import SignoutButton from './SignoutButton';
 
@@ -12,10 +12,10 @@ import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const [showTitle, setShowTitle] = useState(false);
-  //const session = useSession();
+  const session = useSession();
   const { toggle, closeMenu } = useContext(MenuContext)
 
-
+  console.log(session)
 
   useEffect(() => {
     const handleScroll = () => {

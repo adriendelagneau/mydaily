@@ -21,6 +21,16 @@ const userSchema = new Schema(
     password: {
       type: String,
     },
+    isVerified: {
+      type: Boolean,
+      default: false, // Default value is false, change as needed
+    },
+    verifyToken: {
+      type: String
+    },
+    verifyTokenExpires: {
+      type: Date
+    }
   },
   { timestamps: true }
 );
