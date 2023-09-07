@@ -50,9 +50,9 @@ export const authOptions = {
     async signIn({ user, account, profile, email, credentials }) {
       if (account.provider === "google") {
         await connect();
-  
+
         const existingUser = await User.findOne({ email: profile.email });
-  
+
         if (!existingUser) {
           // Create a user in the database based on Google profile
           await User.create({
@@ -65,40 +65,56 @@ export const authOptions = {
       }
       return true; // Continue with sign-in process
     },
-    
-    async jwt({ token, user, account, profile, isNewUser }) {
-      console.log('tyty')
-      if (token  && profile) {         
+
+    async jwt({ token, trigger, session, profile }) {
+
+      if (trigger === "update" && session?.name) {
+        token.name = session.name
+      }
+
+      if (token && profile) {
         const existingUser = await User.findOne({ email: profile.email });
         if (existingUser.isVerified === true) {
-          return {...token, isVerified: existingUser.isVerified}
-        } else {
-          return token
-        }
-      } else {
-        return token    
+          return { ...token, isVerified: existingUser.isVerified }
+        } 
       }
+      
+      //update db
+// Update the user's name in the database
+      try {
+        
+        await User.findOneAndUpdate({ email: token.email }, { name: token.name }).exec();
+      } catch (err) {
+        console.log(err)
+      }
+        return token
     },
 
+    async session({ session, trigger, token, newSession }) {
 
-    async session({ session, user, token }) {
-      console.log( token)
+      if (trigger === "update" && newSession?.name) {
+        // You can update the session in the database if it's not already updated.
+        // await adapter.updateUser(session.user.id, { name: newSession.name })
+
+        // Make sure the updated value is reflected on the client
+        session.name = newSession.name
+      }
+
       return {
         ...session,
         user: {
           ...session.user,
-        isVerified: token.isVerified
-      }}
+          isVerified: token.isVerified,
+          name: token.name
+        }
+      }
     },
-
-
 
   },
   session: {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-
 };
 
 const handler = NextAuth(authOptions);
