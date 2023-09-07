@@ -63,9 +63,35 @@ export const authOptions = {
           });
         }
       }
-  
       return true; // Continue with sign-in process
     },
+    
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (account) {         
+        const existingUser = await User.findOne({ email: profile.email });
+        if (existingUser.isVerified === true) {
+          return {...token, isVerified: existingUser.isVerified}
+        } else {
+          return token
+        }
+      } else {
+        return token    
+      }
+    },
+
+
+    async session({ session, user, token }) {
+      console.log( token)
+      return {
+        ...session,
+        user: {
+          ...session.user,
+        isVerified: token.isVerified
+      }}
+    },
+
+
+
   },
   session: {
     strategy: "jwt",
