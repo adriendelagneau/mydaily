@@ -67,7 +67,8 @@ export const authOptions = {
     },
     
     async jwt({ token, user, account, profile, isNewUser }) {
-      if (account) {         
+      console.log('tyty')
+      if (token  && profile) {         
         const existingUser = await User.findOne({ email: profile.email });
         if (existingUser.isVerified === true) {
           return {...token, isVerified: existingUser.isVerified}
