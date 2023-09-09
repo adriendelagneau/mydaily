@@ -5,78 +5,7 @@ import GSAP from 'gsap';
 import { Power2 } from 'gsap'
 import { Draggable } from 'gsap/Draggable'; // Import Draggable from the specific
 import Link from 'next/link';
-const items = [{
-  id: 0,
-  url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 1,
-  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 2,
-  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 3,
-  url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 4,
-  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 5,
-  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 6,
-  url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 7,
-  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 8,
-  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 9,
-  url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 10,
-  url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},
-{
-  id: 11,
-  url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  title: "Cooked dish on gray bowl",
-  content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?"
-},];
+
 
 GSAP.registerPlugin(Draggable); // Register the Draggable plugin
 const Slider2 = ({articles}) => {
@@ -144,7 +73,7 @@ const Slider2 = ({articles}) => {
 
 
   return (
-    <div className="slider-container w-[90%] xl:w-[1275px] mt-[100px] mx-auto" ref={sliderContainerRef}>
+    <div className="slider-container w-[90%] xl:w-[1275px] my-[100px] mx-auto" ref={sliderContainerRef}>
       <div className="slider" ref={sliderRef}>
         {articles.map((item, index) => (
 
@@ -153,7 +82,7 @@ const Slider2 = ({articles}) => {
               <img src={item.img} alt="" />
               <div className="card-info">
                 <Link href={"/"} className="card-title capitalise">{item.title}</Link>
-                <p className="text-lg card-description line-clamp-4">{item.content}</p>
+                <p className="text-lg card-description line-clamp-4">{item.content[0].text[0]}</p>
               </div>
             </div>
           </div>

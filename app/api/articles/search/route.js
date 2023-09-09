@@ -11,21 +11,15 @@ class APIfeatures {
 
     filtering() {
         if (this.queryString.title) {
+            console.log(this.queryString.title)
             this.articles = this.articles.filter(article => article.title.toLowerCase().includes(this.queryString.title.toLowerCase()));
         }
-        
         if (this.queryString.category) {   
             this.articles = this.articles.filter(article => article.category.name == this.queryString.category) 
         }
-
         if (this.queryString.subcategory) {   
-            console.log("back in the game")
-        
-            console.log(this.queryString.subcategory)
             this.articles = this.articles.filter(article => article.subcategory.name == this.queryString.subcategory) 
-           // console.log(this.articles, "this")
         }
-
         return this;
     }
 
@@ -36,6 +30,13 @@ class APIfeatures {
             } else {
                 this.articles = this.articles.sort((a, b) => b.createdAt - a.createdAt);
             }
+        }
+        return this;
+    }
+
+    limiting() {
+        if (this.queryString.limit) { 
+            this.articles = this.articles.splice(0, this.queryString.limit)
         }
         return this;
     }
@@ -52,9 +53,8 @@ export const GET = async(request) => {
     }
 
     const articleFilter = new APIfeatures(articles, queryString);
-    articleFilter.filtering().sorting(); // Apply the filtering and sorting
+    articleFilter.filtering().sorting().limiting(); // Apply the filtering and sorting
 
     const filteredArticles = articleFilter.articles; // Access the filtered and sorted articles
-console.log(filteredArticles)
     return NextResponse.json(filteredArticles);
 }

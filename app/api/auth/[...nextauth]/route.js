@@ -80,13 +80,10 @@ export const authOptions = {
       }
       
       //update db
-// Update the user's name in the database
-      try {
+
         
         await User.findOneAndUpdate({ email: token.email }, { name: token.name }).exec();
-      } catch (err) {
-        console.log(err)
-      }
+      
         return token
     },
 

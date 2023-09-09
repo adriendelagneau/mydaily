@@ -25,10 +25,18 @@ const articleSchema = new Schema(
       ref: Subcategory,
       required: true
     },
-    content: {
-      type: String,
-      required: true,
-    },
+    content: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        text: {
+          type: [String],
+          required: true,
+        },
+      },
+    ],
     author: {
       type: Schema.Types.ObjectId, 
       ref: Author,

@@ -26,7 +26,7 @@ async function getData(id) {
 
 const page = async ({ params }) => {
     const data = await getData(params.id);
-    console.log(data)
+
   return (
     <div>page</div>
   )

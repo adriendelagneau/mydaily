@@ -11,13 +11,13 @@ export const POST = async (request) => {
         const reqBody = await request.json()
         const { token } = reqBody
 
-      console.log(Date.now())
+
       const user = await User.findOne({ verifyToken: token, verifyTokenExpires: { $gt: Date.now() } });
         
         if (!user) {
             return NextResponsejson({error: "invalid token"}, { status: 400 });
         }
-        console.log(user, "ww")
+   
 
         user.isVerified = true
         user.verifyToken = undefined

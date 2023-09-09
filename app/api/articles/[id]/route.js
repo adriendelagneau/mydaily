@@ -8,7 +8,7 @@ export const GET = async (request, { params }) => {
     try {
       await connect();
   
-      const article = await Article.findById(id);
+      const article = await Article.findById(id).populate(["author", "category", "subcategory"]);
   
       return new NextResponse(JSON.stringify(article), { status: 200 });
     } catch (err) {

@@ -1,28 +1,44 @@
 'use client'
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { MenuContext } from '@/context/MenuContext';
-import Link from 'next/link';
-
 import { categoryData } from '@/constants';
+import Link from 'next/link';
+import axios from 'axios';
+import { redirect } from 'next/dist/server/api-utils';
+import { useRouter } from 'next/navigation'
 
 
 const Sidebar = () => {
   const { isOpen, closeMenu } = useContext(MenuContext);
-
+  const inputRef = useRef(null)
+  const router = useRouter()
 
   // State to keep track of the currently hovered category
   const [currentCategory, setCurrentCategory] = useState(null);
-
   // Function to handle mouse enter event for a category
   const handleMouseEnter = (categoryId) => {
     setCurrentCategory(categoryId);
   };
-
   // Function to handle mouse leave event for a category
   const handleMouseLeave = () => {
     setCurrentCategory(null);
   };
+
+  const onSubmit = async () => {
+    try {
+      let inputValue = inputRef.current.value
+      const res = await axios.get(`/api/articles/search?title=${inputValue}`)
+
+    
+      if (res.request.status === 200 && res.data.length > 0) {
+        closeMenu()
+        router.push(`http://localhost:3000/search?title=${inputValue}`)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
 
 
@@ -34,6 +50,11 @@ const Sidebar = () => {
       <div className={`w-[220px] h-[calc(100vh-65px)] z-30 bg-white fixed top-[65px] transition-all duration-300 ease-in-out border-r ${isOpen ? 'left-0' : '-left-[250px]'}`}>
         <div className='w-full mt-8 mb-5 text-center'>
           <Link href="/subscribe" className="p-2 text-white bg-blue-600 rounded-full hover:bg-blue-500" onClick={closeMenu}>Subscribe</Link>
+        </div>
+
+        <div className='relative my-3'>
+          <input placeholder='Search' className='w-[90%] py-2 pl-1 ml-3 border border-gray-400 pr-8' ref={inputRef}  />
+          <div className='absolute cursor-pointer right-6 top-3' onClick={onSubmit }>S</div>
         </div>
         {/* Navigation list */}
         <ul className='w-full h-full py-3'>
@@ -62,7 +83,7 @@ const Sidebar = () => {
                   onMouseEnter={() => handleMouseEnter(link.id)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <ul className='pl-4 bg-white custom-clip-path min-w-[130px]'>
+                  <ul className='pl-4 bg-white custom-clip-path min-w-[130px] border'>
                     {link.subcategory
 
                       .map((subcategory, subIndex) => (
