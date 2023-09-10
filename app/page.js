@@ -42,10 +42,10 @@ export default async function Home() {
         
         <div className='sticky top-20 w-[250px] h-[800px] ml-5 hidden xl:inline'>
           {data.slice(0,5).map((a, i) => (
-            < >
-            <CardSM key={i}  article={a} />
+            <div  key={i} >
+            <CardSM article={a} />
             <div className='w-full h-[1px] bg-slate-300 my-4'></div>
-            </>
+            </div>
          ))}
         </div>
 

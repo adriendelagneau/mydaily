@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 
 const Sidebar = () => {
   const { isOpen, closeMenu } = useContext(MenuContext);
-  const inputRef = useRef(null)
+  const [inputSearch, setInputSearch] = useState("")
   const router = useRouter()
 
   // State to keep track of the currently hovered category
@@ -24,17 +24,16 @@ const Sidebar = () => {
     setCurrentCategory(null);
   };
 
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      let inputValue = inputRef.current.value
-      console.log(inputValue)
-      const res = await axios.get(`/api/articles/search?title=${inputValue}`)
-
-
+      const res = await axios.get(`/api/articles/search?title=${inputSearch}`)
       if (res.request.status === 200 && res.data.length > 0) {
         closeMenu()
-        router.push(`${process.env.NEXT_PUBLIC_BASE}/search?title=${inputValue}`)
+        setInputSearch("")
+        router.push(`${process.env.NEXT_PUBLIC_BASE}/search?title=${inputSearch}`)
       }
     } catch (err) {
       console.log(err);
@@ -60,7 +59,8 @@ const Sidebar = () => {
       type="text"
       placeholder='Search'
       className='w-[90%] py-2 pl-1 ml-3 border border-gray-400 pr-8 focus:border-1 focus:outline outline-1 outline-blue-900'
-      ref={inputRef}
+              onChange={(e) => setInputSearch(e.target.value)}
+              value={inputSearch}
     />
     <div
       className='absolute cursor-pointer right-6 top-2.5'
