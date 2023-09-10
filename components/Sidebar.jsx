@@ -5,7 +5,6 @@ import { MenuContext } from '@/context/MenuContext';
 import { categoryData } from '@/constants';
 import Link from 'next/link';
 import axios from 'axios';
-import { redirect } from 'next/dist/server/api-utils';
 import { useRouter } from 'next/navigation'
 
 
@@ -25,15 +24,17 @@ const Sidebar = () => {
     setCurrentCategory(null);
   };
 
-  const onSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     try {
       let inputValue = inputRef.current.value
+      console.log(inputValue)
       const res = await axios.get(`/api/articles/search?title=${inputValue}`)
 
-    
+
       if (res.request.status === 200 && res.data.length > 0) {
         closeMenu()
-        router.push(`http://localhost:3000/search?title=${inputValue}`)
+        router.push(`${process.env.NEXT_PUBLIC_BASE}/search?title=${inputValue}`)
       }
     } catch (err) {
       console.log(err);
@@ -51,11 +52,29 @@ const Sidebar = () => {
         <div className='w-full mt-8 mb-5 text-center'>
           <Link href="/subscribe" className="p-2 text-white bg-blue-600 rounded-full hover:bg-blue-500" onClick={closeMenu}>Subscribe</Link>
         </div>
+        
 
-        <div className='relative my-3'>
-          <input placeholder='Search' className='w-[90%] py-2 pl-1 ml-3 border border-gray-400 pr-8' ref={inputRef}  />
-          <div className='absolute cursor-pointer right-6 top-3' onClick={onSubmit }>S</div>
-        </div>
+        <form onSubmit={(e) => handleSubmit(e)}>
+  <div className='relative my-[30px]'>
+    <input
+      type="text"
+      placeholder='Search'
+      className='w-[90%] py-2 pl-1 ml-3 border border-gray-400 pr-8 focus:border-1 focus:outline outline-1 outline-blue-900'
+      ref={inputRef}
+    />
+    <div
+      className='absolute cursor-pointer right-6 top-2.5'
+      onClick={handleSubmit}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+      </svg>
+    </div>
+  </div>
+</form>
+
+
+        
         {/* Navigation list */}
         <ul className='w-full h-full py-3'>
           {categoryData?.map((link, i) => (
